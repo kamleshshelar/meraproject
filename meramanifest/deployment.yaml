@@ -27,14 +27,14 @@ spec:
             cpu: 250m
           limits:
             cpu: 500m
-      imagePullSecrets:
-      - name: azuresecret
+#      imagePullSecrets:
+#      - name: azuresecret
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: lbsvc
-  namespace: meranamespace
+  namespace: dev
 spec:
   type: LoadBalancer
   ports:
