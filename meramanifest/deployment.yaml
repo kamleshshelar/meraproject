@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webproject
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: webproject
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: webproject
+    spec:
+      containers:
+      - name: webprojectcontainer
+        image: meraregistry.azurecr.io/meraproject
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+      imagePullSecrets:
+      - name: azuresecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lbsvc
+  namespace: meranamespace
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: webproject
