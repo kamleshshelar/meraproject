@@ -27,6 +27,8 @@ spec:
             cpu: 250m
           limits:
             cpu: 500m
+      nodeSelector:
+        agentpool: mypool
 #      imagePullSecrets:
 #      - name: azuresecret
 ---
